@@ -3,40 +3,23 @@ package com.gamecommunityserver.controller;
 import com.gamecommunityserver.dto.UserDTO;
 import com.gamecommunityserver.mapper.UserInfoMapper;
 import com.gamecommunityserver.service.impl.UserServiceImpl;
-import org.junit.Before;
-import org.junit.Test;
+import com.gamecommunityserver.utils.sha256Encrypt;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.MockitoAnnotations;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Date;
+
 import static org.mockito.BDDMockito.given;
-import static org.mockito.MockitoAnnotations.initMocks;
 
-@RunWith(MockitoJUnitRunner.class)
-/**
- * TODO:@RunWith
- * 테스트 진행시 JUnit 에 내장된 실행자 외에 다른 실행자를 실행시킵니다.
- * 여기서는 SpringRunner 라는 스프링 실행자를 사용
- * 즉, 스프링 부트 테스트와 JUnit 사이의 연결자 역할
- *
- * 참고 : https://velog.io/@swchoi0329/Spring-Boot-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%BD%94%EB%93%9C-%EC%9E%91%EC%84%B1
- *
- *
- */
 public class UserControllerTest {
 
 
     /**
      * TODO:@InjectMocks
      */
-    @InjectMocks
-    private UserController userController;
-
     @InjectMocks
     private UserServiceImpl userService;
 
@@ -46,73 +29,59 @@ public class UserControllerTest {
     @Mock
     private UserInfoMapper userMapper;
 
-
-    @Test
-    @DisplayName("유저 회원가입 성공 테스트")
-    public void signUpTestSuccess() throws Exception {
-
-        //given
-        UserDTO fakeMember = UserDTO.builder()
-                .id("test")
-                .password("test")
-                .name("test")
-                .build();
-
-        /**
-         * TODO:given()
-         * given() VS when()
-         *
-         */
-        given(userService.register(fakeMember)).willReturn(fakeMember);
-
-        //when
-        UserDTO result = userService.register(fakeMember);
-
-        //then
-        assertThat(result.equals(fakeMember));
+    private final int noPermissionAdmin = 1;
+    private final int notSecession = 0;
+    private final int testUserNumber = 1;
+    public UserDTO generateTestUser(){
+        MockitoAnnotations.initMocks(this); // mock all the field having @Mock annotation
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserNumber(testUserNumber);
+        userDTO.setId("textUserId");
+        userDTO.setPassword(sha256Encrypt.encrypt("testUserPassword"));
+        userDTO.setName("testUserName");
+        userDTO.setAdmin(noPermissionAdmin);
+        userDTO.setCreateTime(new Date());
+        userDTO.setUserSecession(notSecession);
+        return userDTO;
     }
 
     @Test
-    @DisplayName("유저 회원가입 실패 테스트")
-    public void signupTestFail(){
-        //given
-        UserDTO fakeMember = UserDTO.builder()
-                .id("test1")
-                .password("test")
-                .name("test")
-                .build();
-        UserDTO result = userService.register(fakeMember);
-
-        //when
-        given(userService.register(fakeMember)).willReturn(fakeMember);
-
-        //then
-        assertThat(result.equals(fakeMember));
+    @DisplayName("유저 회원가입 성공 테스트")
+    public void signUpSuccessTest(){
+        UserDTO userDTO = generateTestUser();
+        userMapper.register(userDTO);
+    }
+    @Test
+    @DisplayName("id 중복 체크 테스트")
+    public void idOverlapCheckSuccessTest(){
+        UserDTO userDTO = generateTestUser();
+        given(userMapper.idCheck("testUserId")).willReturn(1);
+        given(userMapper.idCheck("testUserId1")).willReturn(0);
+        userService.LoginCheckPassword(userDTO.getId(), userDTO.getPassword());
     }
 
     @Test
     @DisplayName("유저 로그인 성공 테스트")
-    public void userLoginSuccess() throws Exception{
-        signUpTestSuccess();
-
-        String fakeMemberId = "test1";
-        String fakeMemberPassword = "test";
-        UserDTO fakeUserMember = UserDTO.builder()
-                .build();
-        UserDTO result = userService.LoginCheckPassword(fakeMemberId, fakeMemberPassword);
-
-        given(userService.LoginCheckPassword(fakeMemberId, fakeMemberPassword)).willReturn(fakeUserMember);
-
+    public void loginUserSuccessTest(){
+        UserDTO userDTO = generateTestUser();
+        given(userMapper.passwordCheck("testUserId", sha256Encrypt.encrypt("testUserPassword"))).willReturn(userDTO);
+        //assertThat(userService.LoginCheckPassword("testUserId","testUserPassword").equals(userDTO));
     }
 
     @Test
-    @DisplayName("유저 조회 성공 테스트")
-    public void selectUserSuccess() throws Exception{
-        signUpTestSuccess();
+    @DisplayName("유저 정보 확인 테스트")
+    public void selectUserSuccessTest(){
+        UserDTO userDTO = generateTestUser();
+        given(userMapper.selectUser(testUserNumber)).willReturn(userDTO);
+//        assertThat(userService.selectUser(testUserNumber).equals(userDTO));
+    }
 
+    @Test
+    @DisplayName("회원 탈퇴 성공 테스트")
+    public void deleteUserSuccessTest(){
+        UserDTO userDTO = generateTestUser();
+        loginUserSuccessTest();
+        userService.deleteUser(userDTO.getUserNumber());
     }
-    @Before
-    public void setup() {
-        initMocks(this);
-    }
+
 }

@@ -16,13 +16,12 @@ public class CategoryController {
 
     private final CategoryServiceImpl categoryService;
 
-    @Autowired
     public CategoryController(CategoryServiceImpl categoryService) {
         this.categoryService = categoryService;
     }
     @LoginCheck(types = LoginCheck.UserType.ADMIN)
     @PutMapping("/add")
-    public void categoryAdd(@Valid @RequestBody CategoryDTO categoryDTO){
+    public void categoryAdd(Integer loginUserNumber, @Valid @RequestBody CategoryDTO categoryDTO){
         if(categoryService.categoryDuplicateCheck(categoryDTO.getCategoryName()) != 0)
             throw new DuplicateCategoryException("있는 카테고리입니다.");
         categoryService.addCategoryName(categoryDTO);
@@ -30,7 +29,7 @@ public class CategoryController {
     }
     @LoginCheck(types = LoginCheck.UserType.ADMIN)
     @DeleteMapping("/{categoryNumber}")
-    public void categoryDelete(@PathVariable("categoryNumber") int categoryNumber) {
+    public void categoryDelete(Integer loginUserNumber, @PathVariable("categoryNumber") int categoryNumber) {
         if (categoryService.categoryNumberCheck(categoryNumber))
             throw new NotMatchCategoryIdException("정확한 카테고리를 입력해주세요");
 

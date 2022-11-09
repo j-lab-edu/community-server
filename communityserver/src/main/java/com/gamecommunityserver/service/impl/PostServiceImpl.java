@@ -8,7 +8,6 @@ import com.gamecommunityserver.mapper.FileMapper;
 import com.gamecommunityserver.mapper.PostMapper;
 import com.gamecommunityserver.mapper.UserInfoMapper;
 import com.gamecommunityserver.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

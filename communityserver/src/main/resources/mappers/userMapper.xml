@@ -17,7 +17,7 @@
     </select>
 
     <select id="passwordCheck" resultType="com.gamecommunityserver.dto.UserDTO">
-        SELECT userNumber, id
+        SELECT userNumber, id, admin
         FROM user
         WHERE id = #{id} and password = #{password} and userSecession = 0
     </select>

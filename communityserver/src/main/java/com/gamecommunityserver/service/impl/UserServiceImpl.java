@@ -5,15 +5,11 @@ import com.gamecommunityserver.exception.DuplicateIdException;
 import com.gamecommunityserver.mapper.UserInfoMapper;
 import com.gamecommunityserver.service.UserService;
 import com.gamecommunityserver.utils.sha256Encrypt;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
+
     private final UserInfoMapper userMapper;
 
     public UserServiceImpl(UserInfoMapper userMapper) {

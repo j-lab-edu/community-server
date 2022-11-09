@@ -3,7 +3,6 @@ package com.gamecommunityserver.service.impl;
 import com.gamecommunityserver.dto.CategoryDTO;
 import com.gamecommunityserver.mapper.CategoryMapper;
 import com.gamecommunityserver.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
     @Override
     public boolean categoryNumberCheck(int categoryNumber){
-        return categoryMapper.categoryNumberCheck(categoryNumber) == 0;
+        return categoryMapper.categoryNumberCheck(categoryNumber) == 1;
     }
 
     @Override

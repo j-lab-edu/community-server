@@ -21,7 +21,6 @@ public class PostDTO  implements Serializable {
     private Date createTime;
     private int suggestionCount;
     private int views;
-
     private List<FileDTO> fileDTOList;
 
     public PostDTO(){}

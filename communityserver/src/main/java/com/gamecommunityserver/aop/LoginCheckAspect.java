@@ -24,7 +24,7 @@ public class LoginCheckAspect {
         int userNumber = 0;
         int index = 0;
 
-        for(int i=0; i< loginCheck.types().length ; i++)
+        for(int i=0; i< loginCheck.types().length && (userNumber == 0); i++)
         {
             switch( loginCheck.types()[i].toString())
             {

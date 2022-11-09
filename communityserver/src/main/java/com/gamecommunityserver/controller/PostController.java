@@ -24,8 +24,7 @@ public class PostController {
     @LoginCheck(types = {LoginCheck.UserType.ADMIN,
                         LoginCheck.UserType.USER})
     public PostDTO addPost(Integer userNumber, @RequestBody PostDTO postDTO) {
-        PostDTO postMetaData = postService.addPost(postDTO, userNumber);
-        return postMetaData;
+        return postService.addPost(postDTO, userNumber);
     }
     @PostMapping("/{postNumber}")
     @LoginCheck(types = {LoginCheck.UserType.ADMIN,
@@ -48,7 +47,7 @@ public class PostController {
     @LoginCheck(types = {LoginCheck.UserType.ADMIN,
                         LoginCheck.UserType.USER})
     @PutMapping("/{postNumber}")
-    public void addPostComments(@PathVariable int postNumber, @RequestBody CommentsDTO commentsDTO){
+    public void addPostComments(Integer loginUserNumber, @PathVariable int postNumber, @RequestBody CommentsDTO commentsDTO){
         postService.addComments(postNumber, commentsDTO);
         PostDTO postMetaData = postService.selectPost(postNumber);
         System.out.println(postMetaData.getCategoryNumber());
