@@ -52,15 +52,15 @@ public class UserControllerTest {
         userService.register(userDTO);
     }
 
-//    @Test
-//    @DisplayName("유저 회원가입 실패 테스트 (1. 아이디 중복)")
-//    public void signUpFailTest(){
-//        // 1. 아이디 중복 (예외가 커스텀 예외중 중복 아이디 예외가 발생하는지)
-//        final UserDTO userDTO = generateTestUser();
-//        final UserDTO emptyUserDTO = UserDTO.builder().build();
-//        given(userMapper.register(userDTO)).willReturn(emptyUserDTO);
-//        assertEquals(userService.register(userDTO).getId(), emptyUserDTO.getId());
-//    }
+    @Test
+    @DisplayName("유저 회원가입 실패 테스트 (1. 아이디 중복)")
+    public void signUpFailTest(){
+        // 1. 아이디 중복 (예외가 커스텀 예외중 중복 아이디 예외가 발생하는지)
+        final UserDTO userDTO = generateTestUser();
+        final UserDTO emptyUserDTO = UserDTO.builder().build();
+        userService.register(userDTO);
+        assertEquals(userService.register(userDTO).getId(), emptyUserDTO.getId());
+    }
 
     @Test
     @DisplayName("유저 로그인 성공 테스트")

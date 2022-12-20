@@ -26,4 +26,7 @@ public class SessionUtils {
         return (Integer) session.getAttribute(LOGIN_ADMIN_ID);
     }
 
+    public static void clear(HttpSession session){
+        session.invalidate();
+    }
 }

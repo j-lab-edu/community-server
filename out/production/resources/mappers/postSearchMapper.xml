@@ -5,21 +5,26 @@
 
 <mapper namespace="com.communityserver.mapper.PostSearchMapper">
 
-    <select id="getSearchPost" resultType="com.communityserver.dto.PostDTO">
+    <select id="resultSearchPost" resultType="com.communityserver.dto.PostDTO">
         SELECT postNumber, categoryNumber, userNumber, postName, adminPost, contents, createTime, suggestionCount, views
         FROM post
-        WHERE categoryNumber = #{categoryNumber}
-        <if test = 'postName != null'>
-            and postName = #{postName}
-        </if>
-        <if test = 'contents != null'>
-            and contents = #{contents}
-        </if>
-        <if test = 'createTime != null'>
-            and createTime = #{createTime}
-        </if>
-        <if test = 'suggestionCount != 0'>
-            and suggestionCount = #{suggestionCount}
-        </if>
+        <where>
+            <if test = 'categoryNumber != null'>
+                and categoryNumber = #{categoryNumber}
+            </if>
+            <if test = 'postName != null'>
+                and postName LIKE CONCAT(#{postName},'%');
+            </if>
+            <if test = 'contents != null'>
+                and contents LIKE CONCAT(#{contents},'%');
+            </if>
+            <if test = 'createTime != null'>
+                and createTime
+                LIKE CONCAT(DATE_FORMAT(#{createTime},'%Y-%m-%d'), '%');
+            </if>
+            <if test = 'suggestionCount != 0'>
+                and suggestionCount >= #{suggestionCount}
+            </if>
+        </where>
     </select>
 </mapper>

@@ -57,7 +57,7 @@ public class PostControllerTest {
         CommentsDTO commentsDTO = new CommentsDTO();
         commentsDTO.setPostNumber(1);
         commentsDTO.setContents("testCommentsContents");
-        commentsDTO.setUserId(1);
+        commentsDTO.setUserId("testUserId");
         commentsDTO.setCreateTime(new Date());
         return commentsDTO;
     }

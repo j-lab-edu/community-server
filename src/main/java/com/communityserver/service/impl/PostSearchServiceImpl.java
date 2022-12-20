@@ -17,7 +17,7 @@ public class PostSearchServiceImpl implements PostSearchService {
         this.postSearchMapper = postSearchMapper;
     }
 
-    @Cacheable(value = "post", key = "  #postDTO")
+    @Cacheable(value = "post", key = "#postDTO")
     @Override
     public List<PostDTO> resultSearchPost(PostDTO postDTO){
         List<PostDTO> postDTOList = postSearchMapper.resultSearchPost(postDTO);

@@ -1,5 +1,6 @@
 package com.communityserver.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Setter
 @Getter
-
+@Builder
 public class PostDTO  implements Serializable {
     private int postNumber;
     private int categoryNumber;

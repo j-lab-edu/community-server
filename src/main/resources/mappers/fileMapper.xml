@@ -9,4 +9,9 @@
         INSERT INTO file (fileNumber, postNumber, path, fileName, extension)
         VALUES (#{fileNumber}, #{postNumber}, #{path}, #{fileName}, #{extension})
     </insert>
+
+    <select id="deleteFile">
+        DELETE FROM file
+        WHERE postNumber = #{postNumber}
+    </select>
 </mapper>

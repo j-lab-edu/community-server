@@ -8,14 +8,16 @@ import java.util.Date;
 @Getter
 @Setter
 public class CommentsDTO {
+    private int commentsNumber;
     private int postNumber;
     private String contents;
-    private int userId;
+    private String userId;
     private Date createTime;
 
     public void CommentsDTO(){}
 
-    public void CommentsDTO(int postNumber, String contents, int userId, Date createTime){
+    public void CommentsDTO(int commentsNumber, int postNumber, String contents, String userId, Date createTime){
+        this.commentsNumber = commentsNumber;
         this.postNumber = postNumber;
         this.contents = contents;
         this.userId = userId;

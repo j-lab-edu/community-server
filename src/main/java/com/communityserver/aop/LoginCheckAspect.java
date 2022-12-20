@@ -1,7 +1,6 @@
 package com.communityserver.aop;
 
 import com.communityserver.utils.SessionUtils;
-import org.apache.ibatis.jdbc.Null;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -30,18 +29,18 @@ public class LoginCheckAspect {
             if( userNumber == 0) {
                 switch (loginCheck.types()[i].toString()) {
                     case "USER":
-//                        try {
+                        try {
                             userNumber = SessionUtils.getLoginUserNumber(session);
-//                        }catch(NullPointerException e){
-//                            userNumber = 0;
-//                        }
+                        }catch(NullPointerException e){
+                            userNumber = 0;
+                        }
                         break;
                     case "ADMIN":
-//                        try {
+                        try {
                             userNumber = SessionUtils.getAdminLoginUserNumber(session);
-//                        }catch(NullPointerException e){
-//                            userNumber = 0;
-//                        }
+                        }catch(NullPointerException e){
+                            userNumber = 0;
+                        }
                         break;
                 }
             }

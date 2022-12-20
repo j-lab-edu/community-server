@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
     @Override
     public boolean categoryNumberCheck(int categoryNumber){
-        return categoryMapper.categoryNumberCheck(categoryNumber) == 1;
+        return categoryMapper.categoryNumberCheck(categoryNumber) == 0;
     }
 
     @Override

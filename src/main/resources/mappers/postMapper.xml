@@ -39,7 +39,7 @@
 
     <select id = "addComments" resultType = "com.communityserver.dto.PostDTO">
         INSERT comments
-        VALUES (#{postNumber}, #{contents}, #{userId}, #{createTime})
+        VALUES (#{commentsNumber}, #{postNumber}, #{contents}, #{userId}, now())
     </select>
 
     <delete id = "deletePost">

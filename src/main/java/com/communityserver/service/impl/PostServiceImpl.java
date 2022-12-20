@@ -75,4 +75,7 @@ public class PostServiceImpl implements PostService {
     public void deletePost(int postNumber, int userNumber){
         postMapper.deletePost(postNumber, userNumber);
     }
+    public void deleteFile(int postNumber){
+        fileMapper.deleteFile(postNumber);
+    }
 }
